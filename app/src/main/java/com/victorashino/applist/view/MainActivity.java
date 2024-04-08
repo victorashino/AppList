@@ -13,10 +13,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.victorashino.applist.R;
+import com.victorashino.applist.controller.PersonController;
 import com.victorashino.applist.databinding.ActivityMainBinding;
 import com.victorashino.applist.model.Person;
 
 public class MainActivity extends AppCompatActivity {
+
+    PersonController controller;
 
     Person pessoa;
 
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        controller = new PersonController();
+
         pessoa = new Person();
         pessoa.setFirstName("Victor");
         pessoa.setLastName("Ashino");
@@ -69,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             pessoa.setContactPhone(editContactPhone.getText().toString());
 
             Toast.makeText(MainActivity.this, "Salvo " + pessoa.toString(), Toast.LENGTH_SHORT).show();
+
+            controller.save(pessoa);
         });
 
         btnDone.setOnClickListener(view -> {
