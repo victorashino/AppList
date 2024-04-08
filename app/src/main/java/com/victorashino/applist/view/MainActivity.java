@@ -9,8 +9,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.victorashino.applist.R;
+import com.victorashino.applist.model.Person;
 
 public class MainActivity extends AppCompatActivity {
+
+    Person pessoa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +25,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        pessoa = new Person();
+
     }
 }
