@@ -1,6 +1,7 @@
 package com.victorashino.applist.view;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
         pessoa = new Person();
+        pessoa.setFirstName("Victor");
+        pessoa.setLastName("Ashino");
+        pessoa.setDesiredCourse("Java");
+        pessoa.setContactPhone("11-995048410");
 
+        Log.i("POOAndroid", pessoa.toString());
     }
 }
