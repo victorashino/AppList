@@ -1,5 +1,6 @@
 package com.victorashino.applist.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -18,6 +19,9 @@ import com.victorashino.applist.databinding.ActivityMainBinding;
 import com.victorashino.applist.model.Person;
 
 public class MainActivity extends AppCompatActivity {
+
+    SharedPreferences preferences;
+    public static final String NOME_PREFERENCIAS = "pref_viplist";
 
     PersonController controller;
 
@@ -44,18 +48,26 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        preferences = getSharedPreferences(NOME_PREFERENCIAS, 0);
+        SharedPreferences.Editor vipList = preferences.edit();
+
         controller = new PersonController();
 
         pessoa = new Person();
-        pessoa.setFirstName("Victor");
-        pessoa.setLastName("Ashino");
-        pessoa.setDesiredCourse("Java");
-        pessoa.setContactPhone("11-995048410");
+        pessoa.setFirstName(preferences.getString("firstName", ""));
+        pessoa.setLastName(preferences.getString("lastName", ""));
+        pessoa.setDesiredCourse(preferences.getString("desiredCourse", ""));
+        pessoa.setContactPhone(preferences.getString("contactPhone", ""));
 
         editFirstName = binding.editFirstName;
         editLastName = binding.editLastName;
         editDesiredCourse = binding.editDesiredCourse;
         editContactPhone = binding.editContactPhone;
+
+        editFirstName.setText(pessoa.getFirstName());
+        editLastName.setText(pessoa.getLastName());
+        editDesiredCourse.setText(pessoa.getDesiredCourse());
+        editContactPhone.setText(pessoa.getContactPhone());
 
         btnClear = binding.btnClear;
         btnSave = binding.btnSave;
@@ -75,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
             pessoa.setContactPhone(editContactPhone.getText().toString());
 
             Toast.makeText(MainActivity.this, "Salvo " + pessoa.toString(), Toast.LENGTH_SHORT).show();
+
+            vipList.putString("firstName", pessoa.getFirstName());
+            vipList.putString("lastName", pessoa.getLastName());
+            vipList.putString("desiredCourse", pessoa.getDesiredCourse());
+            vipList.putString("contactPhone", pessoa.getContactPhone());
+            vipList.apply();
 
             controller.save(pessoa);
         });
