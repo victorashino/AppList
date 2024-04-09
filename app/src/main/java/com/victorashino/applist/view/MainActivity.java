@@ -13,15 +13,21 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.victorashino.applist.R;
+import com.victorashino.applist.controller.CourseController;
 import com.victorashino.applist.controller.PersonController;
 import com.victorashino.applist.databinding.ActivityMainBinding;
+import com.victorashino.applist.model.Course;
 import com.victorashino.applist.model.Person;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     PersonController controller;
+    CourseController courseController;
 
     Person pessoa;
+    List<Course> courseList;
 
     EditText editFirstName;
     EditText editLastName;
@@ -45,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         controller = new PersonController(MainActivity.this);
+
+        courseController = new CourseController();
+        courseList = courseController.getListCourses();
 
         pessoa = new Person();
         controller.find(pessoa);
