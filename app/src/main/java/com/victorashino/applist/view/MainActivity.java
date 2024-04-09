@@ -1,6 +1,5 @@
 package com.victorashino.applist.view;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -19,11 +18,6 @@ import com.victorashino.applist.databinding.ActivityMainBinding;
 import com.victorashino.applist.model.Person;
 
 public class MainActivity extends AppCompatActivity {
-
-    SharedPreferences preferences;
-    SharedPreferences.Editor vipList;
-
-    public static final String NOME_PREFERENCIAS = "pref_viplist";
 
     PersonController controller;
 
@@ -50,16 +44,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        preferences = getSharedPreferences(NOME_PREFERENCIAS, 0);
-        vipList = preferences.edit();
-
-        controller = new PersonController();
+        controller = new PersonController(MainActivity.this);
 
         pessoa = new Person();
-        pessoa.setFirstName(preferences.getString("firstName", ""));
-        pessoa.setLastName(preferences.getString("lastName", ""));
-        pessoa.setDesiredCourse(preferences.getString("desiredCourse", ""));
-        pessoa.setContactPhone(preferences.getString("contactPhone", ""));
+        controller.find(pessoa);
 
         editFirstName = binding.editFirstName;
         editLastName = binding.editLastName;
@@ -80,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
             editLastName.setText("");
             editDesiredCourse.setText("");
             editContactPhone.setText("");
-
-            vipList.clear();
-            vipList.apply();
+            controller.clearSharedPreferences();
         });
 
         btnSave.setOnClickListener(view -> {
@@ -92,12 +78,6 @@ public class MainActivity extends AppCompatActivity {
             pessoa.setContactPhone(editContactPhone.getText().toString());
 
             Toast.makeText(MainActivity.this, "Salvo " + pessoa.toString(), Toast.LENGTH_SHORT).show();
-
-            vipList.putString("firstName", pessoa.getFirstName());
-            vipList.putString("lastName", pessoa.getLastName());
-            vipList.putString("desiredCourse", pessoa.getDesiredCourse());
-            vipList.putString("contactPhone", pessoa.getContactPhone());
-            vipList.apply();
 
             controller.save(pessoa);
         });
