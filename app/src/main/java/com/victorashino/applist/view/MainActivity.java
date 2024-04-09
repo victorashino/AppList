@@ -21,6 +21,8 @@ import com.victorashino.applist.model.Person;
 public class MainActivity extends AppCompatActivity {
 
     SharedPreferences preferences;
+    SharedPreferences.Editor vipList;
+
     public static final String NOME_PREFERENCIAS = "pref_viplist";
 
     PersonController controller;
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         preferences = getSharedPreferences(NOME_PREFERENCIAS, 0);
-        SharedPreferences.Editor vipList = preferences.edit();
+        vipList = preferences.edit();
 
         controller = new PersonController();
 
@@ -78,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
             editLastName.setText("");
             editDesiredCourse.setText("");
             editContactPhone.setText("");
+
+            vipList.clear();
+            vipList.apply();
         });
 
         btnSave.setOnClickListener(view -> {
