@@ -9,8 +9,6 @@ public class Person {
     private String desiredCourse;
     private String contactPhone;
 
-    public Person() {}
-
     public String getFirstName() {
         return firstName;
     }

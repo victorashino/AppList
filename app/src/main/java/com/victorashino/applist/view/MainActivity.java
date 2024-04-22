@@ -2,8 +2,10 @@ package com.victorashino.applist.view;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -13,15 +15,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.victorashino.applist.R;
+import com.victorashino.applist.controller.CourseController;
 import com.victorashino.applist.controller.PersonController;
 import com.victorashino.applist.databinding.ActivityMainBinding;
 import com.victorashino.applist.model.Person;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     PersonController controller;
+    CourseController courseController;
 
     Person pessoa;
+    List courses;
 
     EditText editFirstName;
     EditText editLastName;
@@ -31,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     Button btnClear;
     Button btnSave;
     Button btnDone;
+
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +63,22 @@ public class MainActivity extends AppCompatActivity {
         editDesiredCourse = binding.editDesiredCourse;
         editContactPhone = binding.editContactPhone;
 
+        btnClear = binding.btnClear;
+        btnSave = binding.btnSave;
+        btnDone = binding.btnDone;
+
         editFirstName.setText(pessoa.getFirstName());
         editLastName.setText(pessoa.getLastName());
         editDesiredCourse.setText(pessoa.getDesiredCourse());
         editContactPhone.setText(pessoa.getContactPhone());
 
-        btnClear = binding.btnClear;
-        btnSave = binding.btnSave;
-        btnDone = binding.btnDone;
+        courseController = new CourseController();
+        courses = courseController.dataForSpiner();
+        spinner = binding.spinner;
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courseController.dataForSpiner());
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinner.setAdapter(adapter);
 
         btnClear.setOnClickListener(view -> {
             editFirstName.setText("");

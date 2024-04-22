@@ -8,4 +8,6 @@
     <string name="limpar">Limpar</string>
     <string name="salvar">Salvar</string>
     <string name="finalizar">Finalizar</string>
+    <string name="selecione_o_curso_desejado">Selecione o curso desejado</string>
+    <string name="imagem_da_tela_de_splash">Imagem da tela de splash</string>
 </resources>
